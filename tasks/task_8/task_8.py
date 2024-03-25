@@ -125,11 +125,11 @@ class QuizGenerator:
 
         for _ in range(self.num_questions):
             ##### YOUR CODE HERE #####
-            question_str = # Use class method to generate question
+            question_str = self.generate_question_with_vectorstore()# Use class method to generate question
             
             ##### YOUR CODE HERE #####
             try:
-                # Convert the JSON String to a dictionary
+              question = json.loads(question_str)  # Convert the JSON String to a dictionary
             except json.JSONDecodeError:
                 print("Failed to decode question JSON.")
                 continue  # Skip this iteration if JSON decoding fails
@@ -139,7 +139,7 @@ class QuizGenerator:
             # Validate the question using the validate_question method
             if self.validate_question(question):
                 print("Successfully generated unique question")
-                # Add the valid and unique question to the bank
+                self.question_bank.append(question) # Add the valid and unique question to the bank
             else:
                 print("Duplicate or invalid question detected.")
             ##### YOUR CODE HERE #####
@@ -170,7 +170,14 @@ class QuizGenerator:
         # Consider missing 'question' key as invalid in the dict object
         # Check if a question with the same text already exists in the self.question_bank
         ##### YOUR CODE HERE #####
-        return is_unique
+        if 'question' not in question:
+          return False  # Missing 'question' key, consider it as invalid
+        new_question_text = question['question']
+        
+        for q in self.question_bank:
+          if 'question' in q and q['question'] == new_question_text:
+            return False  # Duplicate question found
+        return True  # If no duplicates found, the question is unique
 
 
 # Test Generating the Quiz
@@ -178,7 +185,7 @@ if __name__ == "__main__":
     
     embed_config = {
         "model_name": "textembedding-gecko@003",
-        "project": "YOUR-PROJECT-ID-HERE",
+        "project": "gemini-quizify-416105",
         "location": "us-central1"
     }
     
