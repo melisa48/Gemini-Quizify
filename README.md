@@ -10,7 +10,7 @@ Gemini Quizify is an AI-generated quiz Tool designed to provide students and lea
 
 - User-Friendly Interface: The platform boasts an intuitive and easy-to-use interface, making learning engaging and accessible for all users.
 
-- Technologies Used
+## Technologies Used: 
 - Python: The core programming language for developing the backend logic of Gemini Quizify.
 
 - Langchain: Utilized for natural language processing tasks, enabling the tool to understand and analyze textual content effectively.
